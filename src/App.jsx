@@ -28,9 +28,9 @@ const App = () => {
     <div className="container mt-5">
       {" "}
       <h1 className="text-center">Gestore per Articoli di Blog</h1>{" "}
-      <form onSubmit={handleSubmit} className="mb-3">
+      <form onSubmit={handleSubmit} className="mb-4">
         {" "}
-        <div className="form-group mt-3">
+        <div className="form-group mt-4">
           {" "}
           <label htmlFor="articleTitle">Titolo Articolo</label>{" "}
           <input
@@ -43,7 +43,7 @@ const App = () => {
             required
           />
         </div>
-        <button type="submit" className="btn btn-primary mt-3">
+        <button type="submit" className="btn btn-primary mt-4">
           {" "}
           Aggiungi Titolo Articolo
         </button>
@@ -67,7 +67,7 @@ const App = () => {
           ))}
         </ul>
       ) : (
-        <p className="text-center mt-3">Nessun articolo inserito</p>
+        <p className="text-center mt-4">Nessun articolo inserito</p>
       )}
     </div>
   );
