@@ -1,35 +1,76 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import { FaTrash } from "react-icons/fa";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  // Stati per gestione articoli, titolo form e contatore Id
+  const [articles, setArticles] = useState([]);
+  const [title, setTitle] = useState("");
+  const [idCounter, setIdCounter] = useState(1);
+
+  // Funzione invio del form
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Evita il refresh della pagina
+
+    if (title) {
+      setArticles([...articles, { id: idCounter, title }]);
+      setTitle("");
+      setIdCounter(idCounter + 1);
+    }
+  };
+
+  // Funzione per eliminare un articolo
+  const deleteArticle = (id) => {
+    setArticles(articles.filter((article) => article.id !== id));
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+    <div className="container mt-5">
+      {" "}
+      <h1 className="text-center">Gestore per Articoli di Blog</h1>{" "}
+      <form onSubmit={handleSubmit} className="mb-3">
+        {" "}
+        <div className="form-group mt-3">
+          {" "}
+          <label htmlFor="articleTitle">Titolo Articolo</label>{" "}
+          <input
+            type="text"
+            id="articleTitle"
+            className="form-control"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Inserisci titolo dell'articolo"
+            required
+          />
+        </div>
+        <button type="submit" className="btn btn-primary mt-3">
+          {" "}
+          Aggiungi Titolo Articolo
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+      </form>
+      {articles.length > 0 ? (
+        <ul className="list-group">
+          {" "}
+          {articles.map((article) => (
+            <li
+              key={article.id}
+              className="list-group-item d-flex justify-content-between align-items-center"
+            >
+              {article.title}
+              <button
+                className="btn btn-danger btn-sm"
+                onClick={() => deleteArticle(article.id)}
+              >
+                <FaTrash />
+              </button>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-center mt-3">Nessun articolo inserito</p>
+      )}
+    </div>
+  );
+};
 
-export default App
+export default App;
